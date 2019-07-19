@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@nuxt/typescript": "latest",
+    "@types/jest": "^24.0.15",
     "@vue/test-utils": "^1.0.0-beta.27",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^24.1.0",
@@ -40,6 +41,7 @@
     "nodemon": "^1.18.9",
     "sass": "^1.18.0",
     "sass-loader": "^7.1.0",
+    "ts-jest": "^24.0.2",
     "typescript": "^3.4.3",
     "vue-jest": "^3.0.3"
   }
