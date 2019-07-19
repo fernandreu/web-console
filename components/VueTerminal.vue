@@ -13,11 +13,9 @@ import { WebglAddon } from 'xterm-addon-webgl';
 
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
-const DEFAULT_PORT = 3000;
-
 @Component
 export default class VueTerminal extends Vue {
-  private port: number = DEFAULT_PORT;
+  private port: string = location.port;
 
   private initialized: boolean = false;
   private term!: Terminal;
