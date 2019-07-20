@@ -32,6 +32,10 @@ export default class VueTerminal extends Vue {
     this.createTerminal();
   }
   
+  destroyed() {
+    window.removeEventListener('resize', this.fitAddon.fit);
+  }
+
   private createTerminal(): void {
     // Clean terminal
     while (this.terminalContainer.children.length) {
@@ -65,7 +69,7 @@ export default class VueTerminal extends Vue {
     this.fitAddon.fit();
     this.term.focus();
 
-    window.addEventListener('resize', () => this.fitAddon.fit());
+    window.addEventListener('resize', this.fitAddon.fit);
 
     // this.addDomListener(paddingElement, 'change', setPadding);
 
