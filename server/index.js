@@ -60,7 +60,8 @@ async function start() {
             encoding: USE_BINARY_UTF8 ? null : 'utf8'
           });
 
-    console.log('Created terminal with PID: ' + term.pid);
+    const timestamp = new Date().toISOString().replace('T', ' ').substr(0, 19);
+    console.log(`[${timestamp} ${req.ip}] Created terminal with PID: ${term.pid}`);
     terminals[term.pid] = term;
     logs[term.pid] = '';
     term.on('data', function(data) {
@@ -77,13 +78,15 @@ async function start() {
     const term = terminals[pid];
 
     term.resize(cols, rows);
-    console.log('Resized terminal ' + pid + ' to ' + cols + ' cols and ' + rows + ' rows.');
+    const timestamp = new Date().toISOString().replace('T', ' ').substr(0, 19);
+    console.log(`[${timestamp} ${req.ip}] Resized terminal ${pid} to ${cols} cols and ${rows} rows`);
     res.end();
   });
 
   app.ws('/terminals/:pid', function (ws, req) {
     var term = terminals[parseInt(req.params.pid)];
-    console.log('Connected to terminal ' + term.pid);
+    const timestamp = new Date().toISOString().replace('T', ' ').substr(0, 19);
+    console.log(`[${timestamp} ${req.ip}] Connected to terminal ${term.pid}`);
     ws.send(logs[term.pid]);
 
     // string message buffering
@@ -135,7 +138,8 @@ async function start() {
     });
     ws.on('close', function () {
       term.kill();
-      console.log('Closed terminal ' + term.pid);
+      const timestamp = new Date().toISOString().replace('T', ' ').substr(0, 19);
+      console.log(`[${timestamp} ${req.ip}] Closed terminal ${temp.pid}`);
       // Clean things up
       delete terminals[term.pid];
       delete logs[term.pid];
