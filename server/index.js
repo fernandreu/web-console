@@ -37,14 +37,21 @@ async function start() {
     const env = Object.assign({}, process.env);
     env['COLORTERM'] = 'truecolor';
     let proc;
-    let args;
-    if (process.platform === 'win32') {
+    if (env['XTERM_SHELL'] !== undefined) {
+      proc = env['XTERM_SHELL'];
+    } else if (process.platform === 'win32') {
       proc = 'cmd.exe';
-      args = [];
     } else {
       proc = 'bash';
+    }
+
+    console.log(`xterm shell being used: ${proc}`);
+
+    let args = [];
+    if (proc === 'bash') {
       args = [ '--init-file', __dirname + '/.bashrc' ];
     }
+
     const cols = parseInt(req.query.cols);
     const rows = parseInt(req.query.rows);
 
