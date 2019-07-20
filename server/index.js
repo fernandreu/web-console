@@ -139,7 +139,7 @@ async function start() {
     ws.on('close', function () {
       term.kill();
       const timestamp = new Date().toISOString().replace('T', ' ').substr(0, 19);
-      console.log(`[${timestamp} ${req.ip}] Closed terminal ${temp.pid}`);
+      console.log(`[${timestamp} ${req.ip}] Closed terminal ${term.pid}`);
       // Clean things up
       delete terminals[term.pid];
       delete logs[term.pid];
