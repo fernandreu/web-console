@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts">
-import 'xterm/dist/xterm.css';
+import 'xterm/css/xterm.css';
 import { Terminal, ITerminalOptions } from 'xterm';
 import { AttachAddon } from 'xterm-addon-attach';
 import { FitAddon } from 'xterm-addon-fit';
@@ -62,8 +62,10 @@ export default class VueTerminal extends Vue {
     this.socketUrl = this.protocol + location.hostname + ((this.port) ? (':' + this.port) : '') + '/terminals/';
 
     this.term.open(this.terminalContainer);
-    // this.fitAddon.fit();
+    this.fitAddon.fit();
     this.term.focus();
+
+    window.addEventListener('resize', () => this.fitAddon.fit());
 
     // this.addDomListener(paddingElement, 'change', setPadding);
 
