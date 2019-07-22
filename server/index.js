@@ -1,4 +1,5 @@
 const pty = require('node-pty');
+const https = require('https');
 const express = require('express');
 const expressWs = require('express-ws');
 const consola = require('consola');
@@ -156,10 +157,14 @@ async function start() {
   // Give nuxt middleware to express
   app.use(nuxt.render)
   
+  https
+    .createServer(nuxt.options, nuxt.render)
+    .listen(port);
+
   // Listen the server
-  app.listen(port, host)
+  // app.listen(port, host)
   consola.ready({
-    message: `Server listening on http://${host}:${port}`,
+    message: `Server listening on https://${host}:${port}`,
     badge: true
   })
 }
