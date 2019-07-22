@@ -34,6 +34,7 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    'nuxt-basic-auth-module',
   ],
   /*
   ** Axios module configuration
@@ -50,5 +51,11 @@ module.exports = {
     */
     extend(config, ctx) {
     }
-  }
-}
+  },
+  basic: {
+    name: 'admin',
+    pass: 'gatito',
+    // enabled: process.env.BASIC_ENABLED === 'true' // require boolean value(nullable)
+    enabled: true,
+  },
+};
