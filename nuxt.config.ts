@@ -1,5 +1,9 @@
+const path = require('path');
+const fs = require('fs');
+
 const serverConfig = {
   mode: 'spa',
+  server: {},
   /*
   ** Headers of the page
   */
@@ -59,5 +63,14 @@ const serverConfig = {
     enabled: true,
   },
 };
+
+const keyPath = path.resolve(__dirname, 'server.key');
+const certPath = path.resolve(__dirname, 'server.crt');
+if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
+  serverConfig.server.https = {
+    key: fs.readFileSync(keyPath),
+    cert: fs.readFileSync(certPath),
+  };
+}
 
 module.exports = serverConfig;
