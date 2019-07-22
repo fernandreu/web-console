@@ -1,5 +1,9 @@
-module.exports = {
+import path from 'path';
+import fs from 'fs';
+
+const serverConfig = {
   mode: 'spa',
+  server: {} as any,
   /*
   ** Headers of the page
   */
@@ -59,3 +63,14 @@ module.exports = {
     enabled: true,
   },
 };
+
+const keyPath = path.resolve(__dirname, 'server.key');
+const certPath = path.resolve(__dirname, 'server.crt');
+if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
+  serverConfig.server.https = {
+    key: fs.readFileSync(keyPath),
+    cert: fs.readFileSync(certPath),
+  };
+}
+
+module.exports = serverConfig;

@@ -86,3 +86,7 @@ sw.*
 
 # Mac OSX
 .DS_Store
+
+# HTTPS key and certificate
+server.key
+server.crt
