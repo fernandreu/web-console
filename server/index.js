@@ -4,6 +4,8 @@ const express = require('express');
 const expressWs = require('express-ws');
 const consola = require('consola');
 const { Nuxt, Builder } = require('nuxt');
+const path = require('path');
+const fs = require('fs');
 const app = express();
 expressWs(app);
 
@@ -157,14 +159,28 @@ async function start() {
   // Give nuxt middleware to express
   app.use(nuxt.render)
   
-  https
-    .createServer(nuxt.options, nuxt.render)
-    .listen(port);
+
+  let protocol = 'http';
+  const keyPath = path.resolve(__dirname, 'server.key');
+  const certPath = path.resolve(__dirname, 'server.crt');
+  if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
+    const options = {
+      key: fs.readFileSync(keyPath),
+      cert: fs.readFileSync(certPath),
+    };
+
+    https
+      .createServer(options, nuxt.render)
+      .listen(port);
+
+    protocol += 's';
+  } else {
+    app.listen(port, host)
+  }
 
   // Listen the server
-  // app.listen(port, host)
   consola.ready({
-    message: `Server listening on https://${host}:${port}`,
+    message: `Server listening on ${protocol}://${host}:${port}`,
     badge: true
   })
 }
