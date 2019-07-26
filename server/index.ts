@@ -1,10 +1,5 @@
-import fs from 'fs';
-import path from 'path';
 import express from 'express';
-import expressWs from 'express-ws';
-import consola from 'consola';
-import https from 'https';
-import { openTerminal, resizeTerminal, connectTerminal } from './terminals';
+import { openTerminal, resizeTerminal } from './terminals';
 const router = express();
 
 router.get('/test', (req, res) => {
@@ -31,26 +26,6 @@ router.post('/terminals/:pid/size', (req, res) => {
 
   res.end();
 });
-
-// const wsApp = express() as unknown as expressWs.Application;
-// expressWs(wsApp);
-// wsApp.ws('/ws/terminals/:pid', (ws, req) => {
-//   const pid = parseInt(req.params.pid, 10);
-//   connectTerminal(ws, pid);
-// });
-
-// const keyPath = path.resolve(__dirname, 'server.key');
-// const certPath = path.resolve(__dirname, 'server.crt');
-// if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
-//   const httpsServer = https.createServer({
-//     key: fs.readFileSync(keyPath),
-//     cert: fs.readFileSync(certPath),
-//   }, wsApp);
-//   httpsServer.listen(3001, '0.0.0.0');
-//   wsApp.listen(3002, '0.0.0.0');
-// } else {
-//   wsApp.listen(3001, '0.0.0.0');
-// }
 
 module.exports = {
   path: '/api',
