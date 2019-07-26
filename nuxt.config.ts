@@ -1,9 +1,9 @@
-const path = require('path');
-const fs = require('fs');
+import path from 'path';
+import fs from 'fs';
+import NuxtConfiguration from '@nuxt/config';
 
-const serverConfig = {
+const serverConfig: NuxtConfiguration = {
   mode: 'spa',
-  server: {},
   /*
   ** Headers of the page
   */
@@ -12,11 +12,11 @@ const serverConfig = {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
+      { hid: 'description', name: 'description', content: process.env.npm_package_description || '' },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ]
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+    ],
   },
   /*
   ** Customize the progress-bar color
@@ -39,6 +39,7 @@ const serverConfig = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     'nuxt-basic-auth-module',
+    '~/server/sockets',
   ],
   /*
   ** Axios module configuration
@@ -62,15 +63,10 @@ const serverConfig = {
     // enabled: process.env.BASIC_ENABLED === 'true' // require boolean value(nullable)
     enabled: true,
   },
+  serverMiddleware: [
+    // API middleware
+    '~/server/index.ts',
+  ],
 };
 
-const keyPath = path.resolve(__dirname, 'server.key');
-const certPath = path.resolve(__dirname, 'server.crt');
-if (fs.existsSync(keyPath) && fs.existsSync(certPath)) {
-  serverConfig.server.https = {
-    key: fs.readFileSync(keyPath),
-    cert: fs.readFileSync(certPath),
-  };
-}
-
-module.exports = serverConfig;
+export default serverConfig;

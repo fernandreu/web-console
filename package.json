@@ -6,11 +6,11 @@
   "private": true,
   "scripts": {
     "test": "jest",
-    "dev-watch": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
-    "dev": "cross-env NODE_ENV=development node server/index.js",
-    "dev-external": "cross-env NODE_ENV=development NUXT_HOST=0.0.0.0 NUXT_PORT=3000 node server/index.js",
+    "dev-watch": "cross-env NODE_ENV=development nodemon server/index.ts --watch server",
+    "dev": "cross-env NODE_ENV=development nuxt",
+    "dev-external": "cross-env NODE_ENV=development NUXT_HOST=0.0.0.0 NUXT_PORT=3000 nuxt",
     "build": "nuxt build",
-    "start": "cross-env NODE_ENV=production NUXT_HOST=0.0.0.0 NUXT_PORT=3000 node server/index.js",
+    "start": "cross-env NODE_ENV=production NUXT_HOST=0.0.0.0 NUXT_PORT=3000 nuxt",
     "generate": "nuxt generate"
   },
   "dependencies": {
@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "@nuxt/typescript": "latest",
+    "@types/express-ws": "^3.0.0",
     "@types/jest": "^24.0.15",
     "@vue/test-utils": "^1.0.0-beta.27",
     "babel-core": "7.0.0-bridge.0",

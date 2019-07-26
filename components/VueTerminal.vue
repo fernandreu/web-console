@@ -60,10 +60,10 @@ export default class VueTerminal extends Vue {
       }
       const cols = size.cols;
       const rows = size.rows;
-      fetch('/terminals/' + this.pid + '/size?cols=' + cols + '&rows=' + rows, {method: 'POST'});
+      fetch('/api/terminals/' + this.pid + '/size?cols=' + cols + '&rows=' + rows, {method: 'POST'});
     });
     this.protocol = (location.protocol === 'https:') ? 'wss://' : 'ws://';
-    this.socketUrl = this.protocol + location.hostname + ((this.port) ? (':' + this.port) : '') + '/terminals/';
+    this.socketUrl = this.protocol + location.hostname + ((this.port) ? (':' + this.port) : '') + '/ws/terminals/';
 
     this.term.open(this.terminalContainer);
     this.fitAddon.fit();
@@ -96,7 +96,7 @@ export default class VueTerminal extends Vue {
       // Set terminal size again to set the specific dimensions on the demo
       // updateTerminalSize();
 
-      fetch(`/terminals?cols=${this.term.cols}&rows=${this.term.rows}`, {method: 'POST'}).then((res) => {
+      fetch(`/api/terminals?cols=${this.term.cols}&rows=${this.term.rows}`, {method: 'POST'}).then((res) => {
         res.text().then((processId) => {
           console.log(`processId: ${processId}`)
           this.pid = parseInt(processId);
