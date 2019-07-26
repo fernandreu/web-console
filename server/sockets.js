@@ -24,7 +24,7 @@ export default function() {
   expressWs(app, server);
 
   // overwrite nuxt.server.listen()
-  this.nuxt.server.listen = (port, host) => new Promise(resolve => server.listen(port || 3000, host || 'localhost', resolve))
+  this.nuxt.server.listen = (port, host) => new Promise(resolve => server.listen(port || process.env.NUXT_PORT || 3000, host || process.env.NUXT_HOST || 'localhost', resolve))
   
   // close this server on 'close' event
   this.nuxt.hook('close', () => new Promise(server.close))
