@@ -3,7 +3,7 @@ import { openTerminal, resizeTerminal } from './terminals';
 const router = express();
 
 router.get('/test', (req, res) => {
-  res.send('AaaaBbbbb');
+  res.send('This is a test of whether the server routes are working');
   res.end();
 });
 

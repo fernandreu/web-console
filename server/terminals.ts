@@ -1,5 +1,7 @@
 import * as pty from './pty-import';
 import consola from 'consola';
+import { Dictionary } from '@nuxt/vue-app';
+import { IPty } from 'node-pty';
 
 if (pty === undefined) {
   throw new Error('pty is undefined');
@@ -11,13 +13,13 @@ if (pty === undefined) {
  */
 const USE_BINARY_UTF8 = false;
 
-const terminals = {};
-const logs = {};
+const terminals: Dictionary<IPty> = {};
+const logs: Dictionary<string> = {};
 
-export function openTerminal(cols, rows) {
+export function openTerminal(cols: number, rows: number) {
   const env = Object.assign({}, process.env);
   env.COLORTERM = 'truecolor';
-  let proc;
+  let proc: string;
   if (env.XTERM_SHELL !== undefined) {
     proc = env.XTERM_SHELL;
   } else if (process.platform === 'win32') {
@@ -41,7 +43,7 @@ export function openTerminal(cols, rows) {
       cols: cols || 80,
       rows: rows || 24,
       cwd: env.PWD,
-      env: env,
+      env: env as Dictionary<string>,
       encoding: USE_BINARY_UTF8 ? undefined : 'utf8',
     });
 
@@ -53,16 +55,16 @@ export function openTerminal(cols, rows) {
   });
 
   return term;
-};
+}
 
-export function resizeTerminal(pid, cols, rows) {
+export function resizeTerminal(pid: number, cols: number, rows: number) {
   const term = terminals[pid];
   term.resize(cols, rows);
   consola.info(`Resized terminal ${pid} to ${cols} cols and ${rows} rows`);
   return term;
-};
+}
 
-export function connectTerminal(ws, pid) {
+export function connectTerminal(ws, pid: number) {
   const term = terminals[pid];
   consola.info(`Connected to terminal ${term.pid}`);
   ws.send(logs[term.pid]);
@@ -123,4 +125,4 @@ export function connectTerminal(ws, pid) {
   });
 
   return term;
-};
+}
