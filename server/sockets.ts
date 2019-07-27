@@ -1,6 +1,7 @@
 import http from 'http';
 import https from 'https';
 import fs from 'fs';
+import ip from 'ip';
 import path from 'path';
 import express from 'express';
 import expressWs from 'express-ws';
@@ -22,7 +23,8 @@ class FakeListener {
   constructor(protocol, host, port, baseURL = '') {
     this.host = host;
     this.port = port;
-    this.url = `${protocol}://${this.host}:${this.port}${baseURL}`;
+    const actualHost = host === '0.0.0.0' ? ip.address() : host;
+    this.url = `${protocol}://${actualHost}:${this.port}${baseURL}`;
   }
 
   public listen() {/**/}
