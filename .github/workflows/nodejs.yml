@@ -34,3 +34,5 @@ jobs:
       with:
         args: |
           docker info
+          echo This is a multi-command script
+          docker info
