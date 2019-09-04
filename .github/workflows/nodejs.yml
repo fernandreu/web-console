@@ -31,5 +31,6 @@ jobs:
         HOST: ${{ secrets.RPI_HOST }}
         USER: ${{ secrets.RPI_USER }}
         PORT: ${{ secrets.RPI_PORT }}
-      args: |
-        docker info
+      with:
+        args: |
+          docker info
