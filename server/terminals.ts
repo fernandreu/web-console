@@ -42,7 +42,7 @@ export function openTerminal(cols: number, rows: number) {
       name: 'xterm-256color',
       cols: cols || 80,
       rows: rows || 24,
-      cwd: env.PWD,
+      cwd: env.HOME,
       env: env as Dictionary<string>,
       encoding: USE_BINARY_UTF8 ? undefined : 'utf8',
     });
