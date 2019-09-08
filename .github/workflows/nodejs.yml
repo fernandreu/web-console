@@ -34,10 +34,6 @@ jobs:
         HOST: ${{ secrets.RPI_HOST }}
         USER: ${{ secrets.RPI_USER }}
         PORT: ${{ secrets.RPI_PORT }}
-        SHA: $GITHUB_SHA
       with:
         args: |
-          folder=$PWD
-          echo PWD is: $folder
-          ref=$SHA
-          echo SHA is: $ref
+          echo SHA is: {GITHUB_SHA}
