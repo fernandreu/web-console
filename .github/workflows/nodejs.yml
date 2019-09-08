@@ -34,12 +34,10 @@ jobs:
         HOST: ${{ secrets.RPI_HOST }}
         USER: ${{ secrets.RPI_USER }}
         PORT: ${{ secrets.RPI_PORT }}
-        INPUT_SSL_CRT: ${{ secrets.SSL_CRT }}
-        INPUT_SSL_KEY: ${{ secrets.SSL_KEY }}
       with:
         args: |
           # Variables needed for this:
-          folder=$PWD
+          folder=$PWD/web-console
           nodeCache="${folder}/node_modules"
           ref="$GITHUB_SHA"
           serviceName=web-console
@@ -52,8 +50,8 @@ jobs:
           cd $refPath
           git clone https://github.com/fernandreu/web-console .
           git checkout $ref
-          echo "$INPUT_SSL_CRT" > ./server/server.crt
-          echo "$INPUT_SSL_KEY" > ./server/server.key
+          cp ${folder}/server.crt ./server/server.crt
+          cp ${folder}/server.key ./server/server.key
 
           # Build it
           echo Building the source code
