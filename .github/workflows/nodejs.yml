@@ -56,7 +56,7 @@ jobs:
           # Build it
           echo Building the source code
           mkdir -p $nodeCache  # Ensure node cache folder exists...
-          # ln -s $nodeCache node_modules  # ... and symlink it
+          ln -s $nodeCache node_modules  # ... and symlink it
           npm install
           npm run build
           if [ $? -ne 0 ]; then
