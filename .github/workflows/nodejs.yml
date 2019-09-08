@@ -34,14 +34,16 @@ jobs:
         HOST: ${{ secrets.RPI_HOST }}
         USER: ${{ secrets.RPI_USER }}
         PORT: ${{ secrets.RPI_PORT }}
+        INPUT_SSL_CRT: ${{ secrets.SSL_CRT }}
+        INPUT_SSL_KEY: ${{ secrets.SSL_KEY }}
       with:
         args: |
           # Variables needed for this:
           folder=$PWD
           nodeCache="${folder}/node_modules"
-          ref="${{ github.sha }}"
-          sslCert='${{ secrets.SSL_CRT }}'
-          sslKey='${{ secrets.SSL_KEY }}'
+          ref="$GITHUB_SHA"
+          sslCert="$INPUT_SSL_CRT"
+          sslKey="$INPUT_SSL_KEY"
           serviceName=web-console
           
           # Download code being built
