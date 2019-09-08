@@ -41,7 +41,8 @@ jobs:
           nodeCache="${folder}/node_modules"
           ref="$GITHUB_SHA"
           serviceName=web-console
-          newLine="ExecStart=npm run --prefix ${refPath} start"
+          newLine="ExecStart=npm\ run\ --prefix\ ${refPath}\ start"
+          echo New line is: $newLine
           if [ -z "$newLine" ]; then
             echo "Wrong newLine; aborting"
             exit 1
