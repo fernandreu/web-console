@@ -37,5 +37,3 @@ jobs:
       with:
         args: |
           echo GITHUB_SHA: $GITHUB_SHA
-          echo GITHUB_ACTION: $GITHUB_ACTION
-          echo GITHUB_REF: $GITHUB_REF
