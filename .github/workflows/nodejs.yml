@@ -34,6 +34,7 @@ jobs:
         HOST: ${{ secrets.RPI_HOST }}
         USER: ${{ secrets.RPI_USER }}
         PORT: ${{ secrets.RPI_PORT }}
+        GITHUB_SHA: $GITHUB_SHA
       with:
         args: |
           echo SHA from server is: $GITHUB_SHA
