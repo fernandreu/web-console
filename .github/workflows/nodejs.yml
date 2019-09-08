@@ -42,8 +42,6 @@ jobs:
           folder=$PWD
           nodeCache="${folder}/node_modules"
           ref="$GITHUB_SHA"
-          sslCert="$INPUT_SSL_CRT"
-          sslKey="$INPUT_SSL_KEY"
           serviceName=web-console
           
           # Download code being built
@@ -54,8 +52,8 @@ jobs:
           cd $refPath
           git clone https://github.com/fernandreu/web-console .
           git checkout $ref
-          echo "$sslCert" > ./server/server.crt
-          echo "$sslKey" > ./server/server.key
+          echo "$INPUT_SSL_CRT" > ./server/server.crt
+          echo "$INPUT_SSL_KEY" > ./server/server.key
 
           # Build it
           echo Building the source code
@@ -65,6 +63,7 @@ jobs:
           npm run build
           if [ $? -ne 0 ]; then
             echo "Build failed; aborting deployment"
+            rm -rf $refPath
             exit 1
           fi
 
