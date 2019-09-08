@@ -85,6 +85,7 @@ jobs:
 
           # Restart service
           echo Restarting service
+          sudo systemctl daemon-reload
           sudo systemctl restart $serviceName
 
           # Delete previous source code
