@@ -13,6 +13,7 @@ jobs:
     strategy:
       matrix:
         node-version: [10.x]
+        sha: [$GITHUB_SHA]
 
     steps:
     - uses: actions/checkout@v1
@@ -38,5 +39,5 @@ jobs:
         args: |
           folder=$PWD
           echo PWD is: $folder
-          ref=${{ environment.GITHUB_SHA }}
+          ref=${{ matrix.sha }}
           echo SHA is: $ref
