@@ -28,7 +28,7 @@ jobs:
       env:
         CI: true
     - name: deploy
-      uses: maddox/actions/ssh@master
+      uses: fernandreu/ssh-action@master
       env:
         PRIVATE_KEY: ${{ secrets.RPI_PRIVATE_KEY }}
         HOST: ${{ secrets.RPI_HOST }}
@@ -36,4 +36,4 @@ jobs:
         PORT: ${{ secrets.RPI_PORT }}
       with:
         args: |
-          echo SHA is: {GITHUB_SHA}
+          echo SHA is: $GITHUB_SHA
