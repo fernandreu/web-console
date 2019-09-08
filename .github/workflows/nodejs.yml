@@ -36,4 +36,53 @@ jobs:
         PORT: ${{ secrets.RPI_PORT }}
       with:
         args: |
-          echo GITHUB_SHA: ${{ github.sha }}
+          # Variables needed for this:
+          folder=$PWD
+          nodeCache="${folder}/node_modules"
+          ref="${{ github.sha }}"
+          sslCert="${{ secrets.SSL_CRT }}"
+          sslKey="${{ secrets.SSL_KEY }}"
+          serviceName=web-console
+          
+          # Download code being built
+          echo Downloading source code
+          refPath="${folder}/${ref}"
+          rm -rf $refPath # Remove folder if it exists 
+          mkdir $refPath
+          cd $refPath
+          git clone https://github.com/fernandreu/web-console .
+          git checkout $ref
+          echo "$sslCert" > ./server/server.crt
+          echo "$sslKey" > ./server/server.key
+
+          # Build it
+          echo Building the source code
+          mkdir -p $nodeCache  # Ensure node cache folder exists...
+          # ln -s $nodeCache node_modules  # ... and symlink it
+          npm install
+          npm run build
+          if [ $? -ne 0 ]; then
+            echo "Build failed; aborting deployment"
+            exit 1
+          fi
+
+          # Get the current deployment path from the service
+          serviceFile="/etc/systemd/system/${serviceName}.service"
+          line=$(sed -n -e '/^ExecStart=/p' $serviceFile)
+          previousPath=$(echo $line | awk '{print $(NF-1) }')
+          echo Previous source code detected in: $previousPath
+
+          # Replace that path with the new one
+          newLine="ExecStart=npm run --prefix $PWD start"
+          echo New line is: $newLine
+          escaped=$(sed -e 's/[\/&]/\\&/g' <<< $newLine)
+          echo Escaped: $escaped
+          sudo sed -i "/ExecStart=/c\\${escaped}" $serviceFile
+
+          # Restart service
+          echo Restarting service
+          sudo systemctl restart $serviceName
+
+          # Delete previous source code
+          echo Deleting previous source code in: $previousPath
+          sudo rm -rf $previousPath
