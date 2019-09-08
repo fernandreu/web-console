@@ -13,7 +13,6 @@ jobs:
     strategy:
       matrix:
         node-version: [10.x]
-        sha: [$GITHUB_SHA]
 
     steps:
     - uses: actions/checkout@v1
@@ -35,9 +34,10 @@ jobs:
         HOST: ${{ secrets.RPI_HOST }}
         USER: ${{ secrets.RPI_USER }}
         PORT: ${{ secrets.RPI_PORT }}
+        SHA: $GITHUB_SHA
       with:
         args: |
           folder=$PWD
           echo PWD is: $folder
-          ref=${{ matrix.sha }}
+          ref=$SHA
           echo SHA is: $ref
