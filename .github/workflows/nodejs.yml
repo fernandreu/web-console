@@ -41,6 +41,7 @@ jobs:
           nodeCache="${folder}/node_modules"
           ref="$GITHUB_SHA"
           serviceName=web-console
+          refPath="${folder}/${ref}"
           newLine="ExecStart=npm\ run\ --prefix\ ${refPath}\ start"
           echo New line is: $newLine
           if [ -z "$newLine" ]; then
@@ -50,7 +51,6 @@ jobs:
           
           # Download code being built
           echo Downloading source code
-          refPath="${folder}/${ref}"
           rm -rf $refPath # Remove folder if it exists 
           mkdir $refPath
           cd $refPath
@@ -74,7 +74,7 @@ jobs:
           # Get the current deployment path from the service
           serviceFile="/etc/systemd/system/${serviceName}.service"
           line=$(sed -n -e '/^ExecStart=/p' $serviceFile)
-          previousPath=$(echo $line | awk '{print $(NF-1) }')
+          previousPath=$(echo "$line" | awk '{print $(NF-1) }')
           echo Previous source code detected in: $previousPath
 
           # Replace that path with the new one
