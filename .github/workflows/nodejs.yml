@@ -36,4 +36,4 @@ jobs:
         PORT: ${{ secrets.RPI_PORT }}
       with:
         args: |
-          echo SHA is: $GITHUB_SHA
+          echo SHA from server is: $GITHUB_SHA
