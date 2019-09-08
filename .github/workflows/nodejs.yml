@@ -1,6 +1,9 @@
 name: Node CI
 
-on: [push]
+on: 
+  push:
+    branches:    
+      - master         # Push events on master branch
 
 jobs:
   build:
@@ -33,6 +36,5 @@ jobs:
         PORT: ${{ secrets.RPI_PORT }}
       with:
         args: |
-          docker info
-          echo This is a multi-command script
-          docker info
+          folder=$PWD
+          echo PWD is: $folder
