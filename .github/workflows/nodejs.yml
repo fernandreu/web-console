@@ -41,6 +41,11 @@ jobs:
           nodeCache="${folder}/node_modules"
           ref="$GITHUB_SHA"
           serviceName=web-console
+          newLine="ExecStart=npm run --prefix ${refPath} start"
+          if [ -z "$newLine" ]; then
+            echo "Wrong newLine; aborting"
+            exit 1
+          fi
           
           # Download code being built
           echo Downloading source code
@@ -72,7 +77,6 @@ jobs:
           echo Previous source code detected in: $previousPath
 
           # Replace that path with the new one
-          newLine="ExecStart=npm run --prefix ${refPath} start"
           echo New line is: $newLine
           escaped=$(sed -e 's/[\/&]/\\&/g' <<< $newLine)
           echo Escaped: $escaped
