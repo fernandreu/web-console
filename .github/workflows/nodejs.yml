@@ -38,5 +38,5 @@ jobs:
         args: |
           folder=$PWD
           echo PWD is: $folder
-          ref=$GITHUB_SHA
+          ref=${{ env.GITHUB_SHA }}
           echo SHA is: $ref
