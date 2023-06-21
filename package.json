@@ -18,7 +18,7 @@
     "express": "^4.16.4",
     "express-ws": "^4.0.0",
     "node-pty": "^0.8.1",
-    "nuxt": "^2.0.0",
+    "nuxt": "^3.4.3",
     "nuxt-basic-auth-module": "^1.2.0",
     "ts-node": "latest",
     "vue-class-component": "^7.0.2",
